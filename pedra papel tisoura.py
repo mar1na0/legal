@@ -1,10 +1,8 @@
 import random
-
 escolhas=[1, 2, 3]
-jogador=(input("papel-1 tesoura-2 pedra-3 sair-4; sua escolha: "))
-pc=random.choice(escolhas)
 
 def vencer (jogador, pc):
+    #print("pc: ", pc)
     if jogador == pc:
         print("pc: ", pc)
         return("empate")
@@ -22,8 +20,13 @@ def vencer (jogador, pc):
         return("você perdeu:(...))")
     
 while True:
-    jogador=(input("papel-1 tesoura-2 pedra-3; sua escolha: "))
-    if jogador<1 and jogador>4:
+    pc=random.choice(escolhas)
+    jogador= int(input("papel-1 tesoura-2 pedra-3 sair-4; sua escolha: "))
+    if jogador<1 or jogador>4:
         print("inválido")
     if jogador==4:
         print("saiu do jogo...")
+    else:
+        print(vencer(jogador, pc))
+
+vencer(pc,jogador)
