@@ -1,4 +1,13 @@
 import random
+import os
+import platform
+
+def clear_console():
+    if platform.system() == "Windows":
+        os.system('cls')
+    else:
+        os.system('clear')
+
 jogos=["hollow Knight", "little nightmares", "half-life", "red dead redemption", "inside", "limbo", "roblox", "minecraft", "portal", "doom", "team fortress", "left for dead", "call of duty", "counter-strike", "halo", "celeste", "superliminal", "grand theft auto", "arkham asylum", "geometry dash", "super mario bros", "sonic & knuckles", "pac-man", "just dance", "guitar hero", "arkanoid", "pong", "space invaders", "pitfall", "donkey kong"]
 mangas=["my hero academia", "berserk", "vagabond", "assassination classroom", "oyasumi punpun", "tokyo ghoul", "hanako-kun", "spy x family", "saiki k", "death note", "monster", "vinland saga", "jujutsu kaisen", "sakamoto days", "dorohedoro", "naruto", "dragon ball", "pet shop of horrors", "hunter x hunter", "one piece", "black clover", "bleach", "haikyuu", "fullmetal alchemist", "one punch man", "pluto", "slam dunk", "akira", "jojo's bizzare adventure"]
 lista=[]
@@ -95,6 +104,7 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra:(1)")
+        clear_console()
         if letra=="1":
             adivinha=input("adivinhar palavra: ")
             if adivinha==palavra:
