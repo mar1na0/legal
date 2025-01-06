@@ -4,7 +4,7 @@ mangas=["my hero academia", "berserk", "vagabond", "assassination classroom", "o
 lista=[]
 listaerros=[]
 hp=7
-string=0
+forca=0
 homemforca=['''
   +---+
   |   |
@@ -59,13 +59,13 @@ homemforca=['''
 
 def jogo(palavra, letra, homemforca):
     global hp
-    global string
+    global forca
     if letra not in palavra and letra!="1":
         listaerros.append(letra)
         hp-=1
-        if string<6:
-            string+=1
-    print(homemforca[string])
+        if forca<6:
+            forca+=1
+    print(homemforca[forca])
 
 def imprimir(palavra, lista):
     resultado=""
@@ -87,7 +87,7 @@ def imprimir(palavra, lista):
 
 def partida():
     global hp
-    global string
+    global forca
     while True:
         resultado=imprimir(palavra,lista)
         if resultado == palavra:
@@ -103,7 +103,7 @@ def partida():
             else:
                 print("errado!")
                 hp-=1
-                string+=1
+                forca+=1
 
         lista.append(letra)
         jogo(palavra, letra, homemforca)
@@ -117,7 +117,7 @@ while True:
     lista=[]
     listaerros=[]
     hp=7
-    print(homemforca[0])
+    forca=0
     jogador=int(input("escolha um tema: jogos(1) ou mangás(2):"))
     if jogador==1:
         palavra=random.choice(jogos)
