@@ -3,13 +3,69 @@ jogos=["hollow Knight", "little nightmares", "half-life", "red dead redemption",
 mangas=["my hero academia", "berserk", "vagabond", "assassination classroom", "oyasumi punpun", "tokyo ghoul", "hanako-kun", "spy x family", "saiki k", "death note", "monster", "vinland saga", "jujutsu kaisen", "sakamoto days", "dorohedoro", "naruto", "dragon ball", "pet shop of horrors", "hunter x hunter", "one piece", "black clover", "bleach", "haikyuu", "fullmetal alchemist", "one punch man", "pluto", "slam dunk", "akira", "jojo's bizzare adventure"]
 lista=[]
 listaerros=[]
-hp=5
+hp=7
+string=0
+homemforca=['''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''']
 
-def jogo(palavra, letra):
+
+def jogo(palavra, letra, homemforca):
     global hp
-    if letra not in palavra:
+    global string
+    if letra not in palavra and letra!="1":
         listaerros.append(letra)
         hp-=1
+        if string<6:
+            string+=1
+    print(homemforca[string])
 
 def imprimir(palavra, lista):
     resultado=""
@@ -27,20 +83,31 @@ def imprimir(palavra, lista):
         else:
             resultado=resultado+"_"
     print(resultado)
-    return(resultado)
-    
+    return(resultado)    
+
 def partida():
+    global hp
+    global string
     while True:
         resultado=imprimir(palavra,lista)
         if resultado == palavra:
             print("você venceu!!!!")
             break
         print("letras erradas:", listaerros)
-        letra=input("escolha uma letra: ")
+        letra=input("escolha uma letra: \nadivinhar palavra:(1)")
+        if letra=="1":
+            adivinha=input("adivinhar palavra: ")
+            if adivinha==palavra:
+                print("você venceu!! :)")
+                break
+            else:
+                print("errado!")
+                hp-=1
+                string+=1
+
         lista.append(letra)
-    
-        jogo(palavra, letra)
-        print("hp:", hp)
+        jogo(palavra, letra, homemforca)
+        #print("hp:", hp)
         if hp == 0:
             print("você perdeu... :(")
             print(palavra)
@@ -49,7 +116,8 @@ def partida():
 while True:
     lista=[]
     listaerros=[]
-    hp=5
+    hp=7
+    print(homemforca[0])
     jogador=int(input("escolha um tema: jogos(1) ou mangás(2):"))
     if jogador==1:
         palavra=random.choice(jogos)
