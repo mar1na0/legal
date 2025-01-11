@@ -128,6 +128,7 @@ while True:
     listaerros=[]
     hp=7
     forca=0
+    print(homemforca[0])
     jogador=int(input("escolha um tema: jogos(1) ou mangás(2):"))
     if jogador==1:
         palavra=random.choice(jogos)
