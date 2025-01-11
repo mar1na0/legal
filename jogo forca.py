@@ -1,6 +1,7 @@
 import random
 import os
 import platform
+from time import sleep
 
 def clear_console():
     if platform.system() == "Windows":
@@ -69,7 +70,7 @@ homemforca=['''
 def jogo(palavra, letra, homemforca):
     global hp
     global forca
-    if letra not in palavra and letra!="1":
+    if letra not in palavra and letra!="1" and letra not in listaerros:
         listaerros.append(letra)
         hp-=1
         if forca<6:
@@ -104,7 +105,7 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra:(1)")
-        clear_console()
+        #clear_console()
         if letra=="1":
             adivinha=input("adivinhar palavra: ")
             if adivinha==palavra:
@@ -114,6 +115,11 @@ def partida():
                 print("errado!")
                 hp-=1
                 forca+=1
+                sleep(3)
+        if letra in listaerros:
+            print("você já tentou acertar essa letra!")
+            sleep(3)
+        clear_console()
 
         lista.append(letra)
         jogo(palavra, letra, homemforca)
