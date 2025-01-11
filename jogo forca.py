@@ -105,7 +105,6 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra:(1)")
-        #clear_console()
         if letra=="1":
             adivinha=input("adivinhar palavra: ")
             if adivinha==palavra:
