@@ -137,6 +137,7 @@ while True:
     listaerros=[]
     hp=7
     forca=0
+    print("Jogo da Forca")
     jogador=int(input("escolha um tema: jogos(1) ou mangás(2):"))
     print(homemforca[0])
     if jogador==1:
