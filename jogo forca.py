@@ -80,16 +80,8 @@ def jogo(palavra, letra, homemforca):
 def imprimir(palavra, lista):
     resultado=""
     for letra in palavra:
-        if letra in lista:
+        if letra in lista or letra in {" ", "&", "-", "'"}:
             resultado=resultado+letra
-        elif letra == " ":
-            resultado=resultado+" "
-        elif letra == "&":
-            resultado=resultado+"&"
-        elif letra == "-":
-            resultado=resultado+"-"
-        elif letra == "'":
-            resultado=resultado+"'"
         else:
             resultado=resultado+"_"
     print(resultado)
