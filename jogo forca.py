@@ -104,11 +104,13 @@ def partida():
             print("você venceu!!!!")
             break
         print("letras erradas:", listaerros)
-        letra=input("escolha uma letra: \nadivinhar palavra:(1)")
+        letra=input("escolha uma letra: \nadivinhar palavra(1)")
         if letra=="1":
             adivinha=input("adivinhar palavra: ")
             if adivinha==palavra:
                 print("você venceu!! :)")
+                print()
+                sleep(3)
                 break
             else:
                 print("errado!")
@@ -125,7 +127,9 @@ def partida():
         #print("hp:", hp)
         if hp == 0:
             print("você perdeu... :(")
-            print(palavra)
+            print("a palavra era", palavra)
+            print("")
+            sleep(3)
             break
 
 while True:
@@ -133,8 +137,8 @@ while True:
     listaerros=[]
     hp=7
     forca=0
-    print(homemforca[0])
     jogador=int(input("escolha um tema: jogos(1) ou mangás(2):"))
+    print(homemforca[0])
     if jogador==1:
         palavra=random.choice(jogos)
     elif jogador==2:
