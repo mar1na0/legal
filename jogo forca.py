@@ -66,10 +66,10 @@ def clear_console():
     else:
         os.system('clear')
 
-def jogo(palavra, letra, homemforca):
+def checar_erro(palavra, letra, homemforca):
     global hp
     global forca
-    if letra not in palavra and letra!="1" and letra not in listaerros:
+    if letra not in palavra and letra!="1" and letra not in listaerros and len(letra)==1:
         listaerros.append(letra)
         hp-=1
         if forca<6:
@@ -96,7 +96,10 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra(1)")
-        if letra=="1":
+        if len(letra)>1:
+            print("você só pode acertar uma letra de cada vez!")
+            sleep(3)
+        elif letra=="1":
             adivinha=input("adivinhar palavra: ")
             if adivinha==palavra:
                 print("você venceu!! :)")
@@ -108,14 +111,13 @@ def partida():
                 hp-=1
                 forca+=1
                 sleep(3)
-        if letra in listaerros:
+        elif letra in listaerros:
             print("você já tentou acertar essa letra!")
             sleep(3)
+        
         clear_console()
-
+        checar_erro(palavra, letra, homemforca)
         lista.append(letra)
-        jogo(palavra, letra, homemforca)
-        #print("hp:", hp)
         if hp == 0:
             print("você perdeu... :(")
             print("a palavra era", palavra)
