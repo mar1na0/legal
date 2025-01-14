@@ -9,6 +9,7 @@ lista=[]
 listaerros=[]
 hp=7
 forca=0
+maxcaracteres=1
 homemforca=['''
   +---+
   |   |
@@ -69,7 +70,8 @@ def clear_console():
 def checar_erro(palavra, letra, homemforca):
     global hp
     global forca
-    if letra not in palavra and letra!="1" and letra not in listaerros and len(letra)==1:
+    global maxcaracteres
+    if letra not in palavra and letra!="1" and letra not in listaerros and len(letra)==maxcaracteres:
         listaerros.append(letra)
         hp-=1
         if forca<6:
@@ -88,7 +90,7 @@ def imprimir(palavra, lista):
 
 def partida():
     global hp
-    global forca
+    global maxcaracteres
     while True:
         resultado=imprimir(palavra,lista)
         if resultado == palavra:
@@ -96,7 +98,7 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra(1)")
-        if len(letra)>1:
+        if len(letra)>maxcaracteres:
             print("você só pode acertar uma letra de cada vez!")
             sleep(3)
         elif letra=="1":
