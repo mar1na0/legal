@@ -60,12 +60,18 @@ homemforca=['''
  / \  |
       |
 =========''']
+abcnormal=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+abccapslock=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+pos=0
 
 def clear_console():
     if platform.system() == "Windows":
         os.system('cls')
     else:
         os.system('clear')
+
+def capstonormal(letra):
+    return letra.lower()
 
 def checar_erro(palavra, letra, homemforca):
     global hp
@@ -98,6 +104,7 @@ def partida():
             break
         print("letras erradas:", listaerros)
         letra=input("escolha uma letra: \nadivinhar palavra(1)")
+        letra=capstonormal(letra)
         if len(letra)>maxcaracteres:
             print("você só pode acertar uma letra de cada vez!")
             sleep(3)
