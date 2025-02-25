@@ -3,7 +3,7 @@ root=tk.Tk()
 clicar=1
 
 root.title('Jogo da Velha')
-root.geometry('700x800+400+100')
+root.geometry('700x600+400+100')
 root.wm_resizable(width=False, height=False)
 
 def clicar0():
