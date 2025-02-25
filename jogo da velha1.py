@@ -34,20 +34,6 @@ botao2 = tk.Button(root, text='', command=lambda: clicar2(), font='Arial 14 bold
 botao2.pack(pady=10)
 botao2.place(x=260, y=20, width=200, height=160)
 
-def clicar3():
-    global clicar
-    if botao3["text"]=='':
-        if clicar%2!=0:
-            botao3.config(text='X')
-
-        else:
-            botao3.config(text='O')
-        clicar+=1
-
-botao3 = tk.Button(root, text='', command=lambda: clicar3(), font='Arial 14 bold')
-botao3.pack(pady=10)
-botao3.place(x=40, y=200, width=200, height=160)
-
 def clicar4():
     global clicar
     if botao4["text"]=='':
@@ -60,7 +46,7 @@ def clicar4():
 
 botao4 = tk.Button(root, text='', command=lambda: clicar4(), font='Arial 14 bold')
 botao4.pack(pady=10)
-botao4.place(x=260, y=200, width=200, height=160)
+botao4.place(x=40, y=200, width=200, height=160)
 
 def clicar5():
     global clicar
@@ -74,7 +60,7 @@ def clicar5():
 
 botao5 = tk.Button(root, text='', command=lambda: clicar5(), font='Arial 14 bold')
 botao5.pack(pady=10)
-botao5.place(x=480, y=200, width=200, height=160)
+botao5.place(x=260, y=200, width=200, height=160)
 
 def clicar6():
     global clicar
@@ -88,21 +74,35 @@ def clicar6():
 
 botao6 = tk.Button(root, text='', command=lambda: clicar6(), font='Arial 14 bold')
 botao6.pack(pady=10)
-botao6.place(x=480, y=20, width=200, height=160)
+botao6.place(x=480, y=200, width=200, height=160)
 
-def clicar7():
+def clicar3():
     global clicar
-    if botao7["text"]=='':
+    if botao3["text"]=='':
         if clicar%2!=0:
-            botao7.config(text='X')
+            botao3.config(text='X')
 
         else:
-            botao7.config(text='O')
+            botao3.config(text='O')
         clicar+=1
 
-botao7 = tk.Button(root, text='', command=lambda: clicar7(), font='Arial 14 bold')
-botao7.pack(pady=10)
-botao7.place(x=480, y=400, width=200, height=160)
+botao3 = tk.Button(root, text='', command=lambda: clicar3(), font='Arial 14 bold')
+botao3.pack(pady=10)
+botao3.place(x=480, y=20, width=200, height=160)
+
+def clicar9():
+    global clicar
+    if botao9["text"]=='':
+        if clicar%2!=0:
+            botao9.config(text='X')
+
+        else:
+            botao9.config(text='O')
+        clicar+=1
+
+botao9 = tk.Button(root, text='', command=lambda: clicar9(), font='Arial 14 bold')
+botao9.pack(pady=10)
+botao9.place(x=480, y=400, width=200, height=160)
 
 def clicar8():
     global clicar
@@ -118,18 +118,18 @@ botao8 = tk.Button(root, text='', command=lambda: clicar8(), font='Arial 14 bold
 botao8.pack(pady=10)
 botao8.place(x=260, y=400, width=200, height=160)
 
-def clicar9():
+def clicar7():
     global clicar
-    if botao9["text"]=='':
+    if botao7["text"]=='':
         if clicar%2!=0:
-            botao9.config(text='X')
+            botao7.config(text='X')
 
         else:
-            botao9.config(text='O')
+            botao7.config(text='O')
         clicar+=1
 
-botao9 = tk.Button(root, text='', command=lambda: clicar9(), font='Arial 14 bold')
-botao9.pack(pady=10)
-botao9.place(x=40, y=400, width=200, height=160)
+botao7 = tk.Button(root, text='', command=lambda: clicar7(), font='Arial 14 bold')
+botao7.pack(pady=10)
+botao7.place(x=40, y=400, width=200, height=160)
 
 root.mainloop()
