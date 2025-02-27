@@ -20,7 +20,10 @@ def clicar0(botao):
 
 def vencer(x, y, z):
     if x["text"]==y["text"] and x["text"]==z["text"] and x["text"]!='':
-        messagebox.showinfo("", "venceu!")
+        if x["text"]=='X':
+            messagebox.showinfo("", "X venceu!")
+        else:
+            messagebox.showinfo("", "O venceu!")
 
 def vencer_possibilidades():
     #horizontais
