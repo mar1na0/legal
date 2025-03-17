@@ -17,7 +17,7 @@ def adicionar_texto():
             ficheiro4.write('\n'+add)
             print("frase adicionada com succeso")
     except Exception as e:
-    	print("o fichero "+ficheiro+"não existe")
+    	print("o fichero "+ficheiro+"não existe {e}")
 
 criar_ficheiro()
 adicionar_texto()
