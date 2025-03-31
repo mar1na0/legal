@@ -12,7 +12,7 @@ tela1.geometry('380x500+500+100')
 tela1.wm_resizable(width=False, height=False)
 
 ##parte de cima
-partecima=Label(tela1, text="epic", bg=Ve, fg=AM, font='Time 20 bold', anchor='w') #anchor coloca pro lado
+partecima=Label(tela1, text="agenda", bg=Ve, fg=AM, font='Time 20 bold', anchor='w') #anchor coloca pro lado
 partecima.place(x=0, y=0, width=380, height=50)
 
 #nome
@@ -61,5 +61,22 @@ def add():
 
     with open ('agenda.txt', 'a') as ficheiro:
         ficheiro.write('nome= '+nome, '\ncelular= '+celular, '\nendereco= '+endereco, '\nestado= '+estado, '\npais= '+pais, '\nemail'+email)
+
+    messagebox.showinfo('Tela 1', 'escrito com sucesso')
+
+    input_nome.delete('0', 'end') #0- é clicado p/ apagar, end é p/ loop
+    input_celular.delete('0', 'end')
+    input_endereco.delete('0', 'end')
+    input_estado.delete('0', 'end')
+    input_pais.delete('0', 'end')
+    input_email.delete('0', 'end')
+
+def procurar():
+    nome=input_nome.get()
+
+    #with open('agenda.txt', 'r') as arquivo:
+       # for linha in arquivo:
+            #if nome in linha:
+               # a_celu
 
 tela1.mainloop()
