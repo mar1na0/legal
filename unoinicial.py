@@ -71,7 +71,8 @@ class Jogo:
         self.baralho=Baralho()
     
     def rodada(self, jogador):
-        print(jogador.checarcartas())
+        print(jogador)
+        print("")
         carta=jogador.baixarc(self.cartamesa)
         if carta==None:
             jogador.comprar(self.baralho.escolhercarta())
@@ -93,8 +94,8 @@ class Jogo:
         
         print(self.baralho)
         print(self.cartamesa)
-        print(self.voce)
-        print(self.adversario)
+        #print(self.voce)
+        #print(self.adversario)
         
         while True:
             self.rodada(self.voce)
