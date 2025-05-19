@@ -1,3 +1,4 @@
+from tkinter import *
 import random
 
 class Carta:
@@ -14,7 +15,7 @@ class Baralho:
     
     def embaralhar(self):
         valores=["1", "2", "3", "4","5", "6", "7", "8", "9"]
-        cores=["azul","vermelho","amarelo","verde"]
+        cores=["blue","red","yellow","green"]
         
         for i in range(100):
             for valor in valores:
@@ -27,7 +28,7 @@ class Baralho:
     def escolhercarta(self):
         primcarta=self.baralho[0]
         self.baralho.remove(primcarta)
-        return primcarta    
+        return primcarta
                 
     def __str__(self):		#ajuda
         result = ""
@@ -52,6 +53,7 @@ class Jogador:
             pass	#termina na aula
         else:
             for carta in self.mao:
+                
                 if cartamesa.valor==carta.valor or cartamesa.cor==carta.cor:
                     self.mao.remove(carta)
                     return carta
@@ -109,3 +111,15 @@ class Jogo:
     
 jogo=Jogo()
 jogo.comeco()
+
+#########   UI  ######### 
+
+tela1=Tk()
+tela1.title("UNO")
+tela1.geometry('1400x750')
+tela1.wm_resizable(width=False, height=False)
+
+cartamesa=Button(tela1)
+cartamesa.place(x=40, y=20, width=200, height=160)
+
+tela1.mainloop()
