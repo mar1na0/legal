@@ -1,5 +1,11 @@
 from tkinter import *
 import random
+from time import sleep
+
+tela1=Tk()
+tela1.title("UNO")
+tela1.geometry('1400x750')
+tela1.wm_resizable(width=False, height=False)
 
 class Carta:
     def __init__(self, valor, cor):
@@ -111,15 +117,14 @@ class Jogo:
     
 jogo=Jogo()
 jogo.comeco()
+#cartamesa=jogo.cartamesa
 
 #########   UI  ######### 
 
-tela1=Tk()
-tela1.title("UNO")
-tela1.geometry('1400x750')
-tela1.wm_resizable(width=False, height=False)
+bcartamesa=Button(tela1, text=jogo.cartamesa.valor, bg=jogo.cartamesa.cor)
+bcartamesa.place(x=40, y=20, width=200, height=160)
 
-cartamesa=Button(tela1)
-cartamesa.place(x=40, y=20, width=200, height=160)
+bbaralho=Button(tela1, bg="brown")
+bbaralho.place(x=240, y=20, width=200, height=160)
 
 tela1.mainloop()
