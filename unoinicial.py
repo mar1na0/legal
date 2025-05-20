@@ -1,10 +1,10 @@
 from tkinter import *
 import random
-from time import sleep
+#from time import sleep
 
 tela1=Tk()
 tela1.title("UNO")
-tela1.geometry('1400x750')
+tela1.geometry('1300x700')
 tela1.wm_resizable(width=False, height=False)
 
 class Carta:
@@ -77,6 +77,7 @@ class Jogo:
         self.voce=Jogador("Você", False) ##
         self.adversario=Jogador("Pc", False)
         self.baralho=Baralho()
+        self.carta=Carta("c","v")
     
     def rodada(self, jogador):
         print(jogador)
@@ -92,12 +93,21 @@ class Jogo:
         self.adversario=Jogador("Pc", False)
         self.cartamesa=None
         self.baralho=Baralho()
+        self.carta=None
         
         self.baralho.embaralhar()
         
         for i in range(9):
-            self.voce.comprar(self.baralho.escolhercarta())
+            self.carta=self.baralho.escolhercarta()
+            self.voce.comprar(self.carta)
+            bcartav=Button(tela1, text=self.carta.valor, bg=self.carta.cor)
+            bcartav.pack(side=LEFT, ipadx=30, ipady=50, anchor=S)
+            
             self.adversario.comprar(self.baralho.escolhercarta())
+            bcartaa=Button(tela1, text="", bg="green")
+            #bcartaa.place(x=100, y=0, width=100, height=150)
+            bcartaa.pack(side=LEFT, ipadx=30, ipady=50, anchor=N)
+
         self.cartamesa=self.baralho.escolhercarta()
         
         print(self.baralho)
@@ -122,9 +132,9 @@ jogo.comeco()
 #########   UI  ######### 
 
 bcartamesa=Button(tela1, text=jogo.cartamesa.valor, bg=jogo.cartamesa.cor)
-bcartamesa.place(x=40, y=20, width=200, height=160)
+bcartamesa.place(x=600, y=250, width=100, height=150)
 
 bbaralho=Button(tela1, bg="brown")
-bbaralho.place(x=240, y=20, width=200, height=160)
+bbaralho.place(x=1148, y=250, width=100, height=150)
 
 tela1.mainloop()
