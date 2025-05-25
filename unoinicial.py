@@ -47,9 +47,25 @@ class Jogador:
         self.mao=[]
         self.nome=nome
         self.ishuman=ishuman 
+        self.botoes=[]
         
     def comprar(self, carta):
         self.mao.append(carta)
+        if self.ishuman==True:
+            bcarta=Button(tela1, text=carta.valor, bg=carta.cor, command=lambda:self.deletarb_v(bcarta))
+            bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=N)
+            #self.botoes.append(bcarta)
+        else:
+            bcarta=Button(tela1, text=carta.valor, bg=carta.cor, command=lambda:self.deletarb_pc())
+            bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=S)
+            self.botoes.append(bcarta)
+
+    def deletarb_v(self, botao):
+        botao.destroy()
+
+    def deletarb_pc(self):
+        for botao in self.botoes:       ###eu nem sei oq q tá acontecendo aqui... quero dormir
+            botao.destroy()
     
     def checarcartas(self):
         return len(self.mao)
@@ -59,9 +75,9 @@ class Jogador:
             pass	#termina na aula
         else:
             for carta in self.mao:
-                
                 if cartamesa.valor==carta.valor or cartamesa.cor==carta.cor:
                     self.mao.remove(carta)
+                    #self.botoes.remove(botao)
                     return carta
             return None
     
@@ -100,13 +116,7 @@ class Jogo:
         for i in range(9):
             self.carta=self.baralho.escolhercarta()
             self.voce.comprar(self.carta)
-            bcartav=Button(tela1, text=self.carta.valor, bg=self.carta.cor)
-            bcartav.pack(side=LEFT, ipadx=30, ipady=50, anchor=S)
-            
             self.adversario.comprar(self.baralho.escolhercarta())
-            bcartaa=Button(tela1, text="", bg="green")
-            #bcartaa.place(x=100, y=0, width=100, height=150)
-            bcartaa.pack(side=LEFT, ipadx=30, ipady=50, anchor=N)
 
         self.cartamesa=self.baralho.escolhercarta()
         
