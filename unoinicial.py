@@ -47,7 +47,7 @@ class Jogador:
         self.mao=[]
         self.nome=nome
         self.ishuman=ishuman 
-        self.botao=Botoes(self)
+        
         
     def comprar(self, carta):
         self.mao.append(carta)
@@ -56,12 +56,14 @@ class Jogador:
         return len(self.mao)
     
     def baixarc(self, cartamesa):
+        self.botoes=Botoes(self)
         if self.ishuman==True: 
             pass	#termina na aula
         else:
             for carta in self.mao:
                 if cartamesa.valor==carta.valor or cartamesa.cor==carta.cor:
                     self.mao.remove(carta)
+                    #for botao in listab
                        ###
                     return carta
             return None
@@ -73,8 +75,8 @@ class Jogador:
         return result
 
 class Botoes:
-    def __init__(self, jogo):
-        self.carta=Carta("C","V")
+    def __init__(self, jogador):
+        #self.carta=Carta("C","V")
         #self.cor=self.carta.cor
         #self.valor=self.carta.valor
         self.jogador=Jogador("Você",False)
@@ -82,28 +84,35 @@ class Botoes:
         #self.listab=[]
         #self.valor=valor
         #self.cor=cor
-        self.jogo=jogo
+        #self.jogo=jogo
+        self.jogador=jogador
         self.botaoclas=Botao("C","V")
+        self.lbotoes=[]
 
     def criarbotao(self, valor, cor):
         if self.ishuman==True:
             bcarta=Button(tela1, text=valor, bg=cor)
             bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=N)
-            jogo.lbotoes.append(bcarta)
 
-            bcarta=self.botaoclas####
+            self.botaoclas.cor=cor
+            self.botaoclas.valor=valor
+            self.lbotoes.append(self.botaoclas)
 
             return bcarta
         else:
             bcarta=Button(tela1, text=valor, bg=cor)
             bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=S)
-            jogo.lbotoes.append(bcarta)
+            
+            self.botaoclas.cor=cor
+            self.botaoclas.valor=valor
+            self.lbotoes.append(self.botaoclas)
+
             return bcarta
 
-    def deletarbotao(self,botao):
+    #def deletarbotao(self,botao):
         #self.listab.remove(botao)
-        jogo.lbotoes.remove(botao)
-        botao.destroy()
+        #self.lbotoes.remove(botao)
+        #botao.destroy()
 
     #def encontrarbotao(self, carta):
         #for botao in jogo.lbotoes:
@@ -124,10 +133,10 @@ class Jogo:
         self.adversario=Jogador("Pc", False)
         self.baralho=Baralho()
         self.carta=Carta("c","v")
-        self.botoes=Botoes(self)
+        self.botoes=Botoes(None)
         #self.lbotoes=self.botoes.listab
         self.botao=None
-        self.lbotoes=[]
+        #self.lbotoes=[]
     
     def rodada(self, jogador):
         print(jogador)
@@ -135,12 +144,12 @@ class Jogo:
         carta=jogador.baixarc(self.cartamesa)
         if carta==None:
             jogador.comprar(self.baralho.escolhercarta())
-            botaov=self.botoes.criarbotao(self.carta.valor,self.carta.cor)  #tava quaseeee lá
-            self.lbotoes.append(botaov)
+            self.botoes.criarbotao(self.carta.valor,self.carta.cor)  #tava quaseeee lá
+            #self.lbotoes.append(botaov)
         else:
             self.cartamesa=carta
-            botaoa=self.botoes.criarbotao(self.carta.valor,self.carta.cor)
-            self.lbotoes.append(botaoa)
+            self.botoes.criarbotao(self.carta.valor,self.carta.cor)
+            #self.lbotoes.append(botaoa)
             
     def comeco(self):
         self.voce=Jogador("Você", False) ##
@@ -154,11 +163,11 @@ class Jogo:
         for i in range(9):
             self.carta=self.baralho.escolhercarta()
             self.voce.comprar(self.carta)
-            botaov=self.botoes.criarbotao(self.carta.valor,self.carta.cor)
-            self.lbotoes.append(botaov)
+            self.botoes.criarbotao(self.carta.valor,self.carta.cor)
+            #self.lbotoes.append(botaov)
             
-            botaoa=self.botoes.criarbotao(self.carta.valor,self.carta.cor)
-            self.lbotoes.append(botaoa)
+            self.botoes.criarbotao(self.carta.valor,self.carta.cor)
+            #self.lbotoes.append(botaoa)
 
         self.cartamesa=self.baralho.escolhercarta()
         
