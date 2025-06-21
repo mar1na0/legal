@@ -67,8 +67,7 @@ class Jogador:
             return bcarta
         
     def deletarbotao(self, pos):
-        botao=self.botoes[pos]
-        self.botoes.pop(pos)
+        botao=self.botoes.pop(pos)
         botao.destroy()
     
     def checarcartas(self):
