@@ -54,14 +54,14 @@ class Jogador:
     def comprar(self, carta):
         self.mao.append(carta)
         
-    def criarbotao(self, valor, cor, cartamesa, bcartamesa, funcao=print()):    #?
+    def criarbotao(self, valor, cor, cartamesa, bcartamesa, funcao=()):    #função parâmetro, () tá lá só p/ n precisar definir ele qnd n precisa
         if self.ishuman==True:
             bcarta=Button(voce_frame, text=valor, bg=cor, command=lambda:self.clicarb(valor, cor, cartamesa, bcartamesa, funcao), font=font_size)
             bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=S)
             self.botoes.append(bcarta)
             return bcarta
         else:
-            bcarta=Button(adversario_frame, text=valor, bg=cor, font=font_size)
+            bcarta=Button(adversario_frame, bg="brown", font=font_size)
             bcarta.pack(side=LEFT, ipadx=30, ipady=50, anchor=N)
             self.botoes.append(bcarta)
             return bcarta
