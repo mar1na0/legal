@@ -1,0 +1,359 @@
+from tkinter import *
+from tkinter import messagebox 
+import random
+from time import sleep
+from tkinter import PhotoImage
+from PIL import Image, ImageTk, ImageOps
+
+font_size=30
+screen_size='1300x800'
+
+menu=Tk()
+menu.title("UNO")
+menu.geometry(screen_size)
+menu.wm_resizable(width=False, height=False)
+
+bg_image = Image.open("./table.jpg")    #ajudinha hehehehe
+bg_image = bg_image.resize((1300,800), Image.LANCZOS)
+bg_photo = ImageTk.PhotoImage(bg_image)
+
+bg_label = Label(menu, image=bg_photo)
+bg_label.image = bg_photo
+bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+
+bcomecar=Button(menu, text="Start", command=lambda:abrirtela(), font=font_size)
+bcomecar.pack(anchor=CENTER, ipadx=30, ipady=10, expand=True)
+
+bfechar=Button(menu, text="Quit", command=lambda:fechar(menu), font=font_size)
+bfechar.pack(anchor=CENTER, ipadx=30, ipady=10, expand=True)
+
+imagem=Image.open("./unocards.png")
+largurac=4096/10
+alturac=4096/7
+
+largurab=100
+alturab=150
+
+atras=Image.open("./unoatras.png")
+
+def colocarimagens(valor,cor):
+    global imagem,largurac,alturac
+
+    coluna=valor-1
+
+    if cor=="red":
+        linha=0
+    elif cor=="yellow":
+        linha=1
+    elif cor=="blue":
+        linha=2
+    elif cor=="green":
+        linha=3
+
+    x1=coluna*largurac
+    y1=linha*alturac
+    x2=x1+largurac
+    y2=y1+alturac
+
+    recorte=imagem.crop((x1,y1,x2,y2))
+    return recorte
+
+def redimensionar(img, largura, altura):    #ajudinha hihihihi
+    w, h = img.size
+    ratio = min(largura / w, altura / h)
+    new_size = (int(w * ratio), int(h * ratio))
+    return img.resize(new_size, Image.LANCZOS)
+
+def fechar(root):
+    root.destroy()
+
+def abrirtela():    #ajudinha hahahaha
+    menu.attributes("-alpha", 0.0)
+    telauno=Tk()
+    telauno.title("UNO")
+    telauno.geometry(screen_size)
+    telauno.wm_resizable(width=True, height=False)
+
+    bg_image = Image.open("./table.jpg")
+    bg_image = bg_image.resize((1300,450), Image.LANCZOS)
+    bg_photo = ImageTk.PhotoImage(bg_image, master=telauno)
+
+    bg_label = Label(telauno, image=bg_photo)
+    bg_label.image = bg_photo
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    bg_image = Image.open("./fabric.jpg")
+    bg_image = bg_image.resize((1300,210), Image.LANCZOS)
+    img_with_border = ImageOps.expand(bg_image, border=8, fill="brown")
+    bg_photo = ImageTk.PhotoImage(img_with_border, master=telauno)
+
+    voce_frame=Frame(telauno)
+    voce_frame.pack(side=BOTTOM, fill=X)
+
+    bg_label = Label(voce_frame, image=bg_photo)
+    bg_label.image = bg_photo
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    adversario_frame=Frame(telauno)
+    adversario_frame.pack(side=TOP, fill=X) 
+
+    bg_label = Label(adversario_frame, image=bg_photo)
+    bg_label.image = bg_photo
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+    bfechar=Button(telauno, text="Quit", command=lambda:fechar(telauno), font=font_size)
+    bfechar.pack(anchor=NE, ipadx=20, ipady=5)
+
+    menu.after(100, lambda: telauno.destroy())
+    menu.destroy()
+
+    jogo=Jogo(telauno, voce_frame, adversario_frame)
+    telauno.after(100, jogo.comeco)
+
+class Carta:
+    def __init__(self, valor, cor):
+        self.valor=valor
+        self.cor=cor
+
+    def __str__(self):	#ajuda
+        return f"{self.valor} {self.cor}"
+
+class Baralho:
+    def __init__(self):
+        self.baralho=[]
+    
+    def embaralhar(self):
+        valores=["1", "2", "3", "4","5", "6", "7", "8", "9"]
+        cores=["blue","red","yellow","green"]
+        
+        for i in range(100):
+            for valor in valores:
+                for cor in cores:
+                    cartas=Carta(valor, cor)
+                    self.baralho.append(cartas)
+        
+        random.shuffle(self.baralho)            
+        
+    def escolhercarta(self):
+        primcarta=self.baralho[0]
+        self.baralho.remove(primcarta)
+        return primcarta
+                
+    def __str__(self):		#ajuda
+        result = ""
+        for carta in self.baralho:
+            result = result + "|" + str(carta)
+        return result
+            
+class Jogador:
+    def __init__(self, ishuman, frame):
+        global imagem,alturab,largurab,atras
+
+        self.mao=[]
+        self.ishuman=ishuman 
+        self.botoes=[]
+        self.frame=frame
+
+        self.lhistorico=Label(self.frame, text="", font=font_size)
+        self.lhistorico.pack(anchor=E, padx=10, pady=5)
+
+    def comprar(self, carta):
+        self.mao.append(carta)
+        
+    def criarbotao(self, valor, cor, cartamesa, bcartamesa, funcao=()):    #função parâmetro, () tá lá só p/ n precisar definir ele qnd n precisa
+        #textcolor="white"
+        #if cor=="yellow":
+            #textcolor="black"
+        if self.ishuman==True:
+            imagemc=colocarimagens(int(valor),cor)
+            imagemc_redim = redimensionar(imagemc, int(largurab), int(alturab))
+            imagemtk=ImageTk.PhotoImage(imagemc_redim, master=self.frame)
+
+            #bcarta=Button(self.frame, text=valor, bg=cor, command=lambda:self.clicarb(valor, cor, cartamesa, bcartamesa, funcao), font=font_size, fg=textcolor)
+            bcarta=Button(self.frame, command=lambda:self.clicarb(valor, cor, cartamesa, bcartamesa, funcao), image=imagemtk)
+            bcarta.image = imagemtk
+            bcarta.pack(side=LEFT, ipadx=0, ipady=0, anchor=S)
+            self.botoes.append(bcarta)
+
+            return bcarta
+        else:
+            atras_redim=redimensionar(atras,int(largurab),int(alturab))
+            atrastk=ImageTk.PhotoImage(atras_redim, master=self.frame)
+
+            #bcarta=Button(self.frame, bg="brown")
+            bcarta=Button(self.frame, image=atrastk)
+            bcarta.image = atrastk
+            bcarta.pack(side=LEFT, ipadx=0, ipady=0, anchor=N)
+            self.botoes.append(bcarta)
+            return bcarta
+        
+    def deletarbotao(self, pos):
+        botao=self.botoes.pop(pos)
+        botao.destroy()
+    
+    def checarcartas(self):
+        return len(self.mao)
+    
+    def checarpos(self, pos):
+        return self.mao[pos]
+    
+    def clicarb(self, valor, cor, cartamesa, bcartamesa, funcao):
+        #print("valor=",valor," cor=",cor," mesa=",cartamesa, " ", hex(id(cartamesa)))
+        for carta in self.mao:
+            if carta.valor==valor and carta.cor==cor:
+                if cartamesa.valor==carta.valor or cartamesa.cor==carta.cor:
+                    self.deletarbotao(self.mao.index(carta))
+                    self.mao.remove(carta)
+                    
+                    cartamesa.valor=carta.valor
+                    cartamesa.cor=carta.cor
+
+                    #textcolor="white"
+                    #if cartamesa.cor=="yellow":
+                        #textcolor="black"
+
+                    imagemc=colocarimagens(int(cartamesa.valor),cartamesa.cor)
+                    imagemc_redim = redimensionar(imagemc, int(largurab), int(alturab))
+                    imagemtk=ImageTk.PhotoImage(imagemc_redim, master=self.frame)
+                    self.bcartamesa_img = imagemtk
+
+                    #bcartamesa.config(text=cartamesa.valor, bg=cartamesa.cor, fg=textcolor)
+                    bcartamesa.config(image=imagemtk)
+                    funcao()
+                    break
+    
+    def baixarc(self, cartamesa):
+        if self.ishuman==True: 
+            pass    #
+        else:
+            for carta in self.mao:
+                if cartamesa.valor==carta.valor or cartamesa.cor==carta.cor:
+                    self.lhistorico.config(text=f"Opponent played {carta.valor} {carta.cor}")
+                    
+                    self.deletarbotao(self.mao.index(carta))
+                    self.mao.remove(carta)
+                    return carta
+            self.lhistorico.config(text="Opponent bought a card")
+            return None               
+    
+    def __str__(self):
+        result = ""
+        for carta in self.mao:
+            result = result + "|" + str(carta)
+        return result
+
+class Jogo:
+    def __init__(self, root, voce_frame, adversario_frame):
+        global imagem,largurab,alturab,atras
+        
+        self.root=root
+        self.voce_frame=voce_frame
+        self.adversario_frame=adversario_frame
+
+        self.cartamesa=Carta("c","v")
+        self.voce=Jogador(True, voce_frame)
+        self.adversario=Jogador(False, adversario_frame)
+        self.baralho=Baralho()
+        self.botao=None
+        self.bcartamesa=None
+        self.texto=""
+
+        atras_redim=redimensionar(atras,int(largurab),int(alturab))
+        atrastk=ImageTk.PhotoImage(atras_redim, master=self.root)
+
+        #self.bbaralho=Button(self.root, bg="brown", command=lambda:self.botao_baralho())
+        self.bbaralho=Button(self.root, image=atrastk, command=lambda:self.botao_baralho())
+        self.bbaralho.image = atrastk
+        self.bbaralho.pack(side=RIGHT, ipadx=0, ipady=0, anchor=CENTER)
+
+        #red1=PhotoImage(file='./red1.png', master=self.root)
+
+    def botao_baralho(self):
+        carta=self.baralho.escolhercarta()
+        self.voce.comprar(carta)
+        self.voce.criarbotao(carta.valor,carta.cor,self.cartamesa,self.bcartamesa,lambda:self.rodada(self.adversario))
+        self.rodada(self.adversario)
+
+    def finalizar(self, mensagem):
+        x=self.root.winfo_x() #pega a posição da tela
+        y=self.root.winfo_y()
+            
+        telatrans=Toplevel(self.root)
+        telatrans.geometry(f"{screen_size}+{x}+{y}") 
+        telatrans.wm_resizable(width=True, height=False)
+        #telatrans.overrideredirect(True)  #remove as coisas de cima
+        telatrans.attributes("-alpha", 0.7)
+        telatrans.grab_set() #n deixa mais interagir
+
+        messagebox.showinfo("", mensagem, parent=telatrans)
+        telatrans.destroy()
+        self.root.destroy()
+
+        menu.attributes("-alpha", 1)
+
+    def rodada(self, jogador):
+        if self.voce.checarcartas()==0:
+            self.finalizar("You won!")
+            return
+
+        carta=jogador.baixarc(self.cartamesa)
+        
+        #textcolor="white"
+        #if self.cartamesa.cor=="yellow":
+            #textcolor="black"
+
+        if carta==None:
+            carta=self.baralho.escolhercarta()
+            jogador.comprar(carta)
+            jogador.criarbotao(carta.valor,carta.cor,self.cartamesa,self.bcartamesa)
+        else:
+            self.cartamesa.valor=carta.valor
+            self.cartamesa.cor=carta.cor
+
+            imagemc=colocarimagens(int(self.cartamesa.valor),self.cartamesa.cor)
+            imagemc_redim = redimensionar(imagemc, int(largurab), int(alturab))
+            imagemtk=ImageTk.PhotoImage(imagemc_redim, master=self.root)
+            self.bcartamesa_img = imagemtk
+            
+            #self.bcartamesa.config(text=self.cartamesa.valor, bg=self.cartamesa.cor, fg=textcolor)
+            self.bcartamesa.config(image=imagemtk)
+
+        if self.adversario.checarcartas()==0:
+            self.finalizar("You lost...")
+            return
+            
+    def comeco(self):
+        self.voce=Jogador(True, self.voce_frame)
+        self.adversario=Jogador(False, self.adversario_frame)
+        self.cartamesa=None
+        self.baralho=Baralho()
+        carta=None
+        
+        self.baralho.embaralhar()
+        
+        self.cartamesa=self.baralho.escolhercarta()
+        
+        #textcolor="white"
+        #if self.cartamesa.cor=="yellow":
+            #textcolor="black"
+        
+        imagemc=colocarimagens(int(self.cartamesa.valor),self.cartamesa.cor)
+        imagemc_redim = redimensionar(imagemc, int(largurab), int(alturab))
+        imagemtk=ImageTk.PhotoImage(imagemc_redim, master=self.root)
+        self.bcartamesa_img = imagemtk  #referência
+
+        #self.bcartamesa=Button(self.root, text=self.cartamesa.valor, bg=self.cartamesa.cor, font=font_size, fg=textcolor, image=imagemtk)
+        self.bcartamesa=Button(self.root,image=imagemtk)
+        self.bcartamesa.pack(ipadx=0, ipady=0, anchor=CENTER, expand=True)
+        
+        for i in range(9):            
+            carta=self.baralho.escolhercarta()
+            self.adversario.comprar(carta)
+            self.adversario.criarbotao(carta.valor,carta.cor,self.cartamesa,self.bcartamesa)
+
+            carta=self.baralho.escolhercarta()
+            self.voce.comprar(carta)
+            self.voce.criarbotao(carta.valor,carta.cor,self.cartamesa,self.bcartamesa,lambda:self.rodada(self.adversario))
+
+menu.mainloop()
